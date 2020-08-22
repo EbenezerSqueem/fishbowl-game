@@ -4,10 +4,10 @@
   "description": "Fishbowl Game",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
+    "start2": "node server",
     "client": "npm start --prefix fishbowl-game-fe",
     "dev": "concurrently \"nodemon server\" \"npm run client\"",
-    "all": "concurrently \"node server\" \"npm run client\""
+    "start": "concurrently \"node server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
