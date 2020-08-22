@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server",
     "client": "npm start --prefix fishbowl-game-fe",
-    "dev": "concurrently \"nodemon server\" \"npm run client\""
+    "dev": "concurrently \"nodemon server\" \"npm run client\"",
+    "all": "concurrently \"node server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
