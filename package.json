@@ -7,7 +7,7 @@
     "start": "node server.js",
     "client": "npm start --prefix fishbowl-game-fe",
     "dev": "concurrently \"nodemon server\" \"npm run client\"",
-    "start2": "concurrently \"node server\" \"npm run client\""
+    "heroku-postbuild": "cd fishbowl-game-fe && npm install && npm run build"
   },
   "repository": {
     "type": "git",
