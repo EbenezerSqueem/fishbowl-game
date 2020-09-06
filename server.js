@@ -34,13 +34,13 @@ function socketEvents(socket) {
         let roomCode = Math.floor(Math.random() * 10000).toString();
         // console.log('Room code: ' + roomCode);
 
-        const gameRoom = new Room(gameDetails.username, socket, roomCode, gameDetails);
+        const gameRoom = new Room(socket, roomCode, gameDetails);
 
         roomsByCode = {...roomsByCode, [roomCode]:gameRoom};
         // console.log(roomsByCode);
         roomsBySocket = {...roomsBySocket, [socket]:gameRoom}
 
-        socket.emit("room-created", gameRoom.roomDetails);
+        socket.emit("room-created", gameRoom.roomDetails, gameDetails.numberOfLocalPlayers);
         socket.on("disconnect", () => {
             try {
                 currentRoom.notifyRoom("game-owner-disconnected");
@@ -55,20 +55,18 @@ function socketEvents(socket) {
         });
     });
 
-    socket.on("join-room", (username, roomCode) => {
+    socket.on("join-room", (roomCode, numberOfLocalPlayers) => {
         if(roomsByCode[roomCode] === undefined) {
             socket.emit("invalid-room-code");
-        } else if(roomsByCode[roomCode].roomDetails.players[username] !== undefined) {
-            socket.emit("user-already-exists");
         } else {
             let currentRoom = roomsByCode[roomCode];
             let roomDetails = currentRoom.roomDetails;
-            currentRoom.joinRoom(username, socket);
+            currentRoom.joinRoom(socket);
             currentRoom.notifyRoom("user-joined-room", 
                 {
-                    username, 
                     roomCode,
-                    roomDetails
+                    roomDetails,
+                    numberOfLocalPlayers
                 }
             );
 
@@ -101,15 +99,31 @@ function socketEvents(socket) {
     socket.on("submit-words", (username, roomCode, wordForm) => {
         if(roomsByCode[roomCode] === undefined) {
             socket.emit("error");
+        } else if(roomsByCode[roomCode].roomDetails.players[username] !== undefined) {
+            socket.emit("user-already-exists");
         } else {
             // add words to the room object
             let currentRoom = roomsByCode[roomCode];
             currentRoom.roomDetails.gameWords.push(...Object.values(wordForm));
 
+            // add player to room players with player's words
+            currentRoom.roomDetails.players[username] = 
+                { 
+                    name: username, 
+                    team: "", 
+                    score: 0, 
+                    words: Object.values(wordForm) 
+                };
             // add words to player object
-            currentRoom.roomDetails.players[username].words = Object.values(wordForm);
+            // currentRoom.roomDetails.players[username].words = Object.values(wordForm);
             
-            currentRoom.notifyRoom("update-game-state", currentRoom.roomDetails);
+            // currentRoom.notifyRoom("update-game-state", currentRoom.roomDetails);
+            currentRoom.notifyRoom("word-form-submitted", 
+                {
+                    gameRoom: currentRoom.roomDetails,
+                    newUser: username
+                }
+            );
         }
     });
 
@@ -228,10 +242,11 @@ function socketEvents(socket) {
             if(nextTeam === currentRoom.roomDetails.startingTeam) {
                 nextPlayerIndex++;
             }
-            if(nextPlayerIndex >= currentRoom.roomDetails[nextTeam].length) {
+            if((nextPlayerIndex + 1) >= currentRoom.roomDetails[nextTeam].length) {
                 nextPlayerIndex = 0;
             }
             let nextPlayer = currentRoom.roomDetails[nextTeam][nextPlayerIndex];
+            currentRoom.roomDetails.nextPlayerIndex = nextPlayerIndex;
             currentRoom.roomDetails.currentTurnPlayer = nextPlayer;
 
             // send room back

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import socket from '../apis/port';
 import GameInput from './GameInput';
-import { onBlur, onFocus } from '../shared/utils';
 
 export default class CreateRoom extends Component {
     constructor(props) {
@@ -10,8 +9,8 @@ export default class CreateRoom extends Component {
         this.state = {
             displayError: false,
             roomForm: { 
-                username: "",
                 numberOfPlayers: 4,
+                numberOfLocalPlayers: 1,
                 wordsPerPlayer: 3,
                 timePerTurn: 60,
                 numberOfRounds: 3,
@@ -19,26 +18,8 @@ export default class CreateRoom extends Component {
         };   
     }
 
-    updateFormState = (e) => {
-        let form = this.state.roomForm;
-        form[e.target.id] = e.target.value;
-        if(e.target.id === "username" && e.target.value.length > 0) {
-            this.setState({ displayError: false });
-        }
-        this.setState({
-            roomForm: form
-        });
-    }
-
     createRoom = (e) => {
-        // TODO form validation
-        if(this.state.roomForm.username !== "") {
-            socket.emit("create-room", this.state.roomForm);
-        } else {
-            // TODO form validation
-            this.setState({ displayError: true});
-            e.preventDefault();
-        }
+        socket.emit("create-room", this.state.roomForm);
     }
     changeValue = (inputId, inputValue) => {
         let form = this.state.roomForm;
@@ -52,14 +33,6 @@ export default class CreateRoom extends Component {
         return(
             <div className="create-room-modal">
                 <div className="form-inputs">
-                    <input id="username" 
-                        placeholder="username" 
-                        onChange={this.updateFormState} 
-                        autocomplete="off"
-                        onBlur={(e) => onBlur(e, "username")}
-                        onFocus={onFocus}
-                    />
-                    {this.state.displayError && <div className="input-error">please enter a username</div>}
                     <GameInput
                         inputId="numberOfPlayers"
                         inputLabel="# of players"
@@ -68,6 +41,16 @@ export default class CreateRoom extends Component {
                         upperLimit={10}
                         changeAmount={1}
                         changeValue={this.changeValue}
+                    />
+                    <GameInput
+                        inputId="numberOfLocalPlayers"
+                        inputLabel="# of local players"
+                        inputValue={this.state.roomForm.numberOfLocalPlayers}
+                        lowerLimit={1}
+                        upperLimit={this.state.roomForm.numberOfPlayers}
+                        changeAmount={1}
+                        changeValue={this.changeValue}
+
                     />
                     <GameInput
                         inputId="wordsPerPlayer"

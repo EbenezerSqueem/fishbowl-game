@@ -27,9 +27,9 @@ class Room{
         isGamePaused: false,
     };
     
-    constructor(roomOwnerName, roomOwnerSocket, roomCode, gameDetails) {
-        this.roomDetails.roomOwner = roomOwnerName;
-        this.roomDetails.players[roomOwnerName] = { name: roomOwnerName, team: "", score: 0, words: [] };
+    constructor(roomOwnerSocket, roomCode, gameDetails) {
+        // this.roomDetails.roomOwner = roomOwnerName;
+        // this.roomDetails.players[roomOwnerName] = { name: roomOwnerName, team: "", score: 0, words: [] };
         this.playerSockets = [roomOwnerSocket];
         this.roomDetails.roomCode = roomCode;
         // set game settings
@@ -39,9 +39,9 @@ class Room{
         this.roomDetails.gameSettings.numberOfRounds = Number.parseInt(gameDetails.numberOfRounds);
     };
 
-    joinRoom(playerName, socket) {
+    joinRoom(socket) {
         this.playerSockets.push(socket);
-        this.roomDetails.players[playerName] = { name: playerName, team: "", score: 0, words: [] };
+        //this.roomDetails.players[playerName] = { name: playerName, team: "", score: 0, words: [] };
     };
 
     notifyRoom(message, data) {

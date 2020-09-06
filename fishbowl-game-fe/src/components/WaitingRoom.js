@@ -1,7 +1,7 @@
 import React from 'react';
 import OwnerControls from './OwnerControls';
 
-const WaitingRoom = ({ gameRoom, roomCode, username, isGameOwner }) => {
+const WaitingRoom = ({ gameRoom, roomCode, isGameOwner }) => {
     let joinedPlayers = [];
     for(const [key, value] of Object.entries(gameRoom.players)) {
         
@@ -14,7 +14,7 @@ const WaitingRoom = ({ gameRoom, roomCode, username, isGameOwner }) => {
     };
     return(
         <div className="waiting-room-container">
-            <div className="waiting-room-greeting">Hi {username}! You are in the waiting room. Room key: {roomCode}</div>
+            <div className="waiting-room-greeting">Hello! You are in the waiting room. Room key: {roomCode}</div>
             <div className="player-container">
                 <div className="player-list-label">Players Joined</div>
                 <ul className="player-list">

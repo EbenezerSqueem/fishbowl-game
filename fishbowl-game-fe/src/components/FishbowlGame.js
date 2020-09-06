@@ -15,40 +15,68 @@ export default class FishbowlGame extends Component {
             inGameRoom: false,
             isGameOwner: false,
             isGameOver: false,
-            username: "",
+            localUsers: [],
+            numberOfLocalPlayers: 1,
             roomCode: "",
             enteredWords: false,
-
             gameRoom: {}
         }
     }
 
     componentDidMount = () => {
-        socket.on("room-created", gameRoomDetails => {
+        socket.on("room-created", (gameRoomDetails, numLocal) => {
             
             this.setState({
-                username: gameRoomDetails.roomOwner,
                 inGameRoom: true,
                 isGameOwner: true,
                 roomCode: gameRoomDetails.roomCode,
-                gameRoom: gameRoomDetails
+                gameRoom: gameRoomDetails,
+                numberOfLocalPlayers: numLocal,
+                isGameRestart: false
             });
         })
 
         socket.on("user-joined-room", data => {
 
-            if(this.state.username === "") {
+            if(!this.state.inGameRoom) {
                 // update state for new user
                 this.setState({ 
-                    username: data.username,
                     inGameRoom: true,
                     roomCode: data.roomCode,
-                    gameRoom: data.roomDetails
+                    gameRoom: data.roomDetails,
+                    numberOfLocalPlayers: data.numberOfLocalPlayers
                 });
             } else {
                 // update game state for all users already joined
                 this.setState({
                     gameRoom: data.roomDetails
+                });
+            }
+        });
+
+        socket.on("word-form-submitted", ({gameRoom, newUser}) => {
+            if(!this.state.enteredWords) {
+                // determine if all local users entered submitted their words
+                let usersArr = this.state.localUsers;
+                usersArr.push(newUser);
+                
+                if(usersArr.length === this.state.numberOfLocalPlayers) {
+                    this.setState({ 
+                        gameRoom,
+                        localUsers: usersArr,
+                        enteredWords: true
+                    });
+                } else {
+                    // more users need to submit their words
+                    this.setState({ 
+                        gameRoom,
+                        localUsers: usersArr
+                    });
+                }
+            } else {
+                // just update the game state with new online users
+                this.setState({
+                    gameRoom
                 });
             }
         });
@@ -68,14 +96,15 @@ export default class FishbowlGame extends Component {
                 gameRoom: gameRoom,
                 isGameOver: false,
                 enteredWords: false,
+                isGameRestart: true
 
             });
         });
     }
 
-    submittedWords = () => {
-        this.setState({ enteredWords: true });
-    }
+    // submittedWords = () => {
+    //     this.setState({ enteredWords: true });
+    // }
 
     updateGameState = gameRoom => {
         this.setState({ gameRoom: gameRoom });
@@ -99,9 +128,11 @@ export default class FishbowlGame extends Component {
                     && !this.state.enteredWords 
                     && <WordForm 
                             roomCode={this.state.roomCode}
-                            username={this.state.username}
                             numberOfWords={this.state.gameRoom.gameSettings.wordsPerPlayer}
-                            submittedWords={this.submittedWords}
+                            numberOfLocalPlayers={this.state.numberOfLocalPlayers}
+                            numberOfUsersSubmitted={this.state.localUsers.length}
+                            isGameRestart={this.state.isGameRestart}
+                            gameRoom={this.state.gameRoom}
                         />
                 }
 
@@ -112,7 +143,6 @@ export default class FishbowlGame extends Component {
                     && <WaitingRoom
                         isGameOwner={this.state.isGameOwner}
                         roomCode={this.state.roomCode}
-                        username={this.state.username}
                         gameRoom={this.state.gameRoom}
                         />
                 }
@@ -121,7 +151,7 @@ export default class FishbowlGame extends Component {
                     this.state.gameRoom.isGameStarted
                     && !this.state.isGameOver
                     && <GameRoom 
-                        username={this.state.username} 
+                        localUsers={this.state.localUsers} 
                         gameRoom={this.state.gameRoom}
                         isGameOwner={this.state.isGameOwner} 
                         updateGameState={this.updateGameState} 

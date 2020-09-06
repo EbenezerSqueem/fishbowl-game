@@ -20,7 +20,7 @@ export default class GameRoom extends Component {
     }
 
     componentDidMount = () => {
-        if(this.props.gameRoom.currentTurnPlayer === this.props.username) {
+        if(this.props.localUsers.includes(this.props.gameRoom.currentTurnPlayer)) {
             this.setState({ isMyTurn: true });
         }
         socket.on("turn-started", gameRoom => {
@@ -53,7 +53,7 @@ export default class GameRoom extends Component {
             // update game state in props
             this.props.updateGameState(gameRoom);
             // update state
-            if(this.props.gameRoom.currentTurnPlayer === this.props.username) {
+            if(this.props.localUsers.includes(this.props.gameRoom.currentTurnPlayer)) {
                 this.setState({ isMyTurn: true });
             }
         });
@@ -80,8 +80,7 @@ export default class GameRoom extends Component {
     }
 
     correctAnswer = (roomCode) => {
-        let username = this.props.username;
-        socket.emit("correct-answer", roomCode, username, this.props.gameRoom.players[username].team);
+        socket.emit("correct-answer", roomCode, this.props.gameRoom.currentTurnPlayer, this.props.gameRoom.currentTurnTeam);
     }
 
     startTimer = () => {
