@@ -1,6 +1,6 @@
 .game-container {
   text-align: center;
-  background-color: #82C0CC;
+  background-color: #82c0cc;
   height: 100vh;
 }
 
@@ -11,19 +11,24 @@
   flex-direction: column;
   align-items: center;
 }
+.title-logo {
+  margin-top: 25px;
+}
 .game-title {
   display: flex;
   font-size: 45px;
 }
-.game-title-fish, .header-title-fish {
-  color: #16697A;
+.game-title-fish,
+.header-title-fish {
+  color: #16697a;
 }
-.game-title-bowl, .header-title-bowl {
-  color: #FFA62B;
+.game-title-bowl,
+.header-title-bowl {
+  color: #ffa62b;
 }
 .header {
   width: 100%;
-  background-color: #489FB5;
+  background-color: #489fb5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,34 +45,36 @@
   padding: 2px;
   border-radius: 7px;
   width: 50%;
-  color: #EDE7E3;
+  color: #ede7e3;
   font-weight: bold;
   font-family: sans-serif;
   font-size: 18px;
-  background-color: #16697A;
+  background-color: #16697a;
   border-style: none;
 }
 .fb-game-btn:hover {
-  background-color: #FFA62B;
-  color: #16697A;
+  background-color: #ffa62b;
+  color: #16697a;
   cursor: pointer;
 }
 .fb-game-btn:focus {
   outline: 0;
 }
 .lighter-btn {
-  background-color: #489FB5;
+  background-color: #489fb5;
 }
-.modal-container, .modal-container {
+.modal-container,
+.modal-container {
   position: fixed;
   top: 0px;
   left: 0px;
   width: 100%;
   height: 100%;
   padding: 10px;
-  background-color: #82C0CC;
+  background-color: #82c0cc;
 }
-.create-room-modal, .join-room-modal {
+.create-room-modal,
+.join-room-modal {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,22 +93,22 @@
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
-  border-color: #16697A;
-  background-color: #489FB5;
-  color: #EDE7E3;
+  border-color: #16697a;
+  background-color: #489fb5;
+  color: #ede7e3;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
 }
 .form-inputs input::placeholder {
-  color: #EDE7E3;
+  color: #ede7e3;
 }
-.form-inputs input:hover{
-  background-color: #FFA62B;
+.form-inputs input:hover {
+  background-color: #ffa62b;
 }
 .form-inputs input:focus {
   outline: 0;
-  background-color: #FFA62B;
+  background-color: #ffa62b;
 }
 .game-input {
   display: grid;
@@ -110,7 +117,7 @@
   justify-content: space-around;
   font-size: 20px;
   font-weight: bold;
-  color: #16697A;
+  color: #16697a;
   width: 75%;
 }
 .input-label {
@@ -124,7 +131,7 @@
 .word-form-container {
   display: flex;
   flex-direction: column;
-  align-items: center;;
+  align-items: center;
 }
 .icon-container {
   margin-top: 10px;
@@ -133,7 +140,7 @@
 .input-error {
   font-size: 20px;
   font-weight: bold;
-  color: #FFA62B;
+  color: #ffa62b;
 }
 .active-icon {
   cursor: pointer;
@@ -142,25 +149,29 @@
 .waiting-room-greeting {
   margin: 15px;
   padding: 24px 0px;
-  background-color: #16697A;
-  color: #EDE7E3;
+  background-color: #16697a;
+  color: #ede7e3;
   border-radius: 10px;
   font-family: sans-serif;
   font-size: 16px;
 }
-.player-list-label, .game-controls-title {
-  border-bottom: #FFA62B solid 4px;
+.player-list-label,
+.game-controls-title {
+  border-bottom: #ffa62b solid 4px;
   margin: 0 2em;
   padding-bottom: 1em;
   font-family: sans-serif;
   font-size: 20px;
   font-weight: bold;
 }
-.player-container, .game-controls, .game-room-sub-container, .game-summary-notifications {
+.player-container,
+.game-controls,
+.game-room-sub-container,
+.game-summary-notifications {
   margin: 15px;
   padding: 14px 0px;
-  background-color: #16697A;
-  color: #EDE7E3;
+  background-color: #16697a;
+  color: #ede7e3;
   border-radius: 10px;
 }
 .player-list {
@@ -191,7 +202,7 @@
   margin-top: 10px;
 }
 .team-settings-header {
-  border-bottom: #82C0CC solid 2px;
+  border-bottom: #82c0cc solid 2px;
   margin: 1em 3em;
   padding-bottom: 1em;
   font-family: sans-serif;
@@ -206,7 +217,7 @@
 }
 .team-settings-list {
   list-style-type: none;
-  border-top: #82C0CC solid 1px;
+  border-top: #82c0cc solid 1px;
   padding-top: 1em;
 }
 .team-select {
@@ -214,14 +225,14 @@
   font-family: sans-serif;
   border-radius: 10px;
   border-style: none;
-  background-color: #489FB5;
-  color: #EDE7E3;
+  background-color: #489fb5;
+  color: #ede7e3;
   font-weight: bold;
 }
 .team-select:focus {
   outline: 0;
 }
-.team-select option { 
+.team-select option {
   font-weight: bold;
 }
 .teams-container {
@@ -229,23 +240,25 @@
   justify-content: space-evenly;
   align-items: flex-start;
 }
-.team-settings-li { 
+.team-settings-li {
   display: flex;
   align-items: center;
 }
 
 .scoreboard-container {
   margin: 15px;
-  background-color: #16697A;
-  color: #EDE7E3;
+  background-color: #16697a;
+  color: #ede7e3;
   border-radius: 10px;
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
   grid-template-areas: "title title" "teamOne teamTwo";
 }
-.scoreboard-title, .game-details-header, .game-summary-header {
-  border-bottom: #82C0CC solid 2px;
+.scoreboard-title,
+.game-details-header,
+.game-summary-header {
+  border-bottom: #82c0cc solid 2px;
   margin: 1em 3em;
   padding-bottom: 1em;
   font-family: sans-serif;
@@ -259,7 +272,8 @@
 .team-two-scores {
   grid-area: teamTwo;
 }
-.team-score, .details-div {
+.team-score,
+.details-div {
   font-size: 18px;
   font-weight: bold;
 }
@@ -278,7 +292,8 @@
 .timer-container {
   grid-area: timer;
 }
-.turn-container, .pause-btn-container {
+.turn-container,
+.pause-btn-container {
   grid-area: buttons;
 }
 .pause-label {
@@ -288,21 +303,23 @@
   font-weight: bold;
 }
 .turn-label {
-  border-bottom: #82C0CC solid 2px;
+  border-bottom: #82c0cc solid 2px;
   margin: 1em 4em;
   padding-bottom: 1em;
   font-family: sans-serif;
   font-size: 18px;
   font-weight: bold;
 }
-.current-word-label, .time, .timer-label {
+.current-word-label,
+.time,
+.timer-label {
   font-size: 28px;
   font-weight: bold;
 }
 .current-word {
   font-size: 32px;
   font-weight: bold;
-  color: #FFA62B;
+  color: #ffa62b;
 }
 .winner-section {
   margin: 10px 0px;
@@ -311,7 +328,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .form-inputs{
-      width: 100%;
-    }
+  .form-inputs {
+    width: 100%;
+  }
 }
