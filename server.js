@@ -30,7 +30,7 @@ function getNextWord(roomDetails) {
 function socketEvents(socket) {
   socket.on("create-room", (gameDetails) => {
     let roomCode = Math.floor(Math.random() * 10000).toString();
-    // console.log('Room code: ' + roomCode);
+    // console.log("Room code: " + roomCode);
 
     const gameRoom = new Room(socket, roomCode, gameDetails);
 
@@ -61,6 +61,9 @@ function socketEvents(socket) {
     if (roomsByCode[roomCode] === undefined) {
       socket.emit("invalid-room-code");
     } else {
+      // added to allow for quick validation on client side. Mainly for app
+      socket.emit("valid-room");
+
       let currentRoom = roomsByCode[roomCode];
       let roomDetails = currentRoom.roomDetails;
       currentRoom.joinRoom(socket);
