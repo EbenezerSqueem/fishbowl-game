@@ -61,9 +61,6 @@ function socketEvents(socket) {
     if (roomsByCode[roomCode] === undefined) {
       socket.emit("invalid-room-code");
     } else {
-      // added to allow for quick validation on client side. Mainly for app
-      socket.emit("valid-room");
-
       let currentRoom = roomsByCode[roomCode];
       let roomDetails = currentRoom.roomDetails;
       currentRoom.joinRoom(socket);
@@ -106,6 +103,9 @@ function socketEvents(socket) {
     ) {
       socket.emit("user-already-exists");
     } else {
+      // added to allow for quick validation on client side. Mainly for app
+      socket.emit("valid-user");
+
       // add words to the room object
       let currentRoom = roomsByCode[roomCode];
       currentRoom.roomDetails.gameWords.push(...Object.values(wordForm));
