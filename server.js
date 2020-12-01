@@ -104,7 +104,7 @@ function socketEvents(socket) {
       socket.emit("user-already-exists");
     } else {
       // added to allow for quick validation on client side. Mainly for app
-      socket.emit("valid-user");
+      io.to(socket.id).emit("valid-username", username);
 
       // add words to the room object
       let currentRoom = roomsByCode[roomCode];
