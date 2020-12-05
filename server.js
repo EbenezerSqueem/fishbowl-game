@@ -3,6 +3,7 @@ const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 // import room object
 const Room = require("./Room").Room;
@@ -31,8 +32,9 @@ function socketEvents(socket) {
   socket.on("create-room", (gameDetails) => {
     let roomCode = Math.floor(Math.random() * 10000).toString();
     // console.log("Room code: " + roomCode);
+    let jitsiRoom = `fb-${uuidv4()}`;
 
-    const gameRoom = new Room(socket, roomCode, gameDetails);
+    const gameRoom = new Room(socket, roomCode, gameDetails, jitsiRoom);
 
     roomsByCode = { ...roomsByCode, [roomCode]: gameRoom };
     // console.log(roomsByCode);
