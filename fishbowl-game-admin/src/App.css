@@ -1,9 +1,16 @@
+body {
+  margin: 0;
+}
 .game-container {
   text-align: center;
   background-color: #82c0cc;
   height: 100vh;
 }
-
+.title-screen-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .title-logo-container {
   padding: 15px;
   display: flex;
@@ -252,9 +259,10 @@
 }
 .game-room-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .scoreboard-container {
   width: 95%;
@@ -291,6 +299,17 @@
 }
 .team-scores-list {
   list-style-type: none;
+}
+.game-jitsi-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  align-items: center;
+}
+.sub-container {
+  padding-top: 10px;
+  flex: 2;
 }
 .game-room-sub-container {
   width: 95%;

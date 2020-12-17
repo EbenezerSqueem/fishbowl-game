@@ -1,6 +1,11 @@
 import React from "react";
 
-export const IconSVG = ({
+export const IconSVG: React.FC<{
+  width: number;
+  height: number;
+  viewBoxWidth: number;
+  viewBoxHeight: number;
+}> = ({
   width = 204,
   height = 204,
   viewBoxWidth = 208,

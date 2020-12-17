@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "client": "npm start --prefix fishbowl-game-fe",
+    "client": "npm start --prefix fishbowl-game-admin",
     "dev": "concurrently \"nodemon server\" \"npm run client\"",
-    "heroku-postbuild": "cd fishbowl-game-fe && npm install && npm run build"
+    "heroku-postbuild": "cd fishbowl-game-admin && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/EbenezerSqueem/fishbowl-game#readme",
   "dependencies": {
     "concurrently": "^5.2.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "socket.io": "^2.3.0",
     "uuid": "^8.3.1"

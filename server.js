@@ -8,6 +8,8 @@ const { v4: uuidv4 } = require("uuid");
 // import room object
 const Room = require("./Room").Room;
 
+require("dotenv").config();
+
 let roomsByCode = {};
 let roomsBySocket = {};
 
@@ -29,6 +31,17 @@ function getNextWord(roomDetails) {
 }
 
 function socketEvents(socket) {
+  socket.on("submit-admin-code", (adminCode) => {
+    console.log(adminCode);
+    if (adminCode === process.env.ADMIN_CODE) {
+      // allow access
+      io.to(socket.id).emit("correct-code", roomsByCode);
+    } else {
+      // deny access
+      io.to(socket.id).emit("incorrect-code");
+    }
+  });
+
   socket.on("create-room", (gameDetails) => {
     let roomCode = Math.floor(Math.random() * 10000).toString();
     // console.log("Room code: " + roomCode);
@@ -296,10 +309,10 @@ io.on("connection", socketEvents);
 const port = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("fishbowl-game-fe/build"));
+  app.use(express.static("fishbowl-game-admin/build"));
   app.get("*", (req, res) => {
     res.sendFile(
-      path.join(__dirname, "fishbowl-game-fe", "build", "index.html")
+      path.join(__dirname, "fishbowl-game-admin", "build", "index.html")
     );
   });
 } else {
@@ -307,10 +320,10 @@ if (process.env.NODE_ENV === "production") {
   // app.get('*', (req,res)=>{
   //     res.sendFile(path.join(__dirname,'fishbowl-game-fe','public','index.html'));
   // });
-  app.use(express.static("fishbowl-game-fe/build"));
+  app.use(express.static("fishbowl-game-admin/build"));
   app.get("*", (req, res) => {
     res.sendFile(
-      path.join(__dirname, "fishbowl-game-fe", "build", "index.html")
+      path.join(__dirname, "fishbowl-game-admin", "build", "index.html")
     );
   });
 }
