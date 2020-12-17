@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Fishbowl Game",
   "main": "index.js",
+  "engines": {
+    "npm": "6.x",
+    "yarn": "1.x"
+  },
   "scripts": {
     "start": "node server.js",
     "client": "npm start --prefix fishbowl-game-admin",
